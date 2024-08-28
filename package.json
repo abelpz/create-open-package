@@ -1,0 +1,10 @@
+{
+  "name": "ts-package",
+  "version": "1.0.0",
+  "bin": {
+    "ts-package": "./bin/setup-project.js"
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3"
+  }
+}
