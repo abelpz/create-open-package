@@ -1,11 +1,11 @@
-# ts-package
+# {package-name}
 A simple package template to create new TypeScript projects.
 
 ## Steps to create a new project
 
 1. Clone this repository.
 2. Do a global replace of the following string:
-    - `ts-package` -> `your-package-name`
+    - `{package-name}` -> `your-package-name`
 3. Update the `package.json` file with your package information.
 4. Run `pnpm install` to install the dependencies.
 5. Run `git init` to initialize a new git repository.

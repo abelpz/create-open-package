@@ -1,12 +1,35 @@
 #!/usr/bin/env node
-const spawn = require('cross-spawn');
-const templates = require('./templates.js');
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
 
 const fs = require('fs');
 const path = require('path');
 
-const [, , packageName, author, _template, fullSetup] = process.argv;
-console.log({process})
+function toSpliced(array, start, deleteCount, ...items) {
+  // Ensure start is within bounds
+  start = Math.max(start < 0 ? array.length + start : start, 0);
+  // Ensure deleteCount is within bounds
+  deleteCount = Math.max(Math.min(deleteCount, array.length - start), 0);
+
+  // Create a new array
+  const newArr = array.slice(0, start).concat(items, array.slice(start + deleteCount));
+  return newArr;
+}
+
+const runCommand = (command, args) => {
+  console.log(`Running: ${command} ${args ? args.join(" ") : ""}`);
+  spawn.sync(command, args, { stdio: 'inherit' });
+};
+
+const argv = yargs(hideBin(toSpliced(process.argv,2,1))).argv
+const packageName = process.argv[2]
+
+const spawn = require('cross-spawn');
+const templates = require('./templates.js');
+
+const {author: _author, template: _template, fullSetup} = argv;
+
+const author = _author ?? "{author}";
 
 const template = _template ?? "typescript"
 
@@ -14,11 +37,6 @@ const replacementKeys = {
   "{package-name}": packageName,
   "{author}": author
 }
-
-const runCommand = (command, args) => {
-  console.log(`Running: ${command} ${args.join(" ")}`);
-  spawn.sync(command, args, { stdio: 'inherit' });
-};
 
 const replaceInTemplate = (template) => {
   templates[template].replacements.forEach(({files,key}) => {
@@ -40,22 +58,21 @@ const updatePackageJson = (filePath, newInfo) => {
   fs.writeFileSync(filePath, JSON.stringify(updatedPackageJson, null, 2), 'utf8');
 };
 
-const setupProject = async (targetDir, packageName) => {
+const setupProject = async (packageName) => {
   const newPackageInfo = {
     name: packageName,
     version: '0.0.1',
     description: 'Your package description',
-    author: author || 'Your Name',
+    author: author,
   };
 
   const currentDir = process.cwd();
-  const projectDir = path.resolve(currentDir, projectName);
+  const projectDir = path.resolve(currentDir, packageName);
   fs.mkdirSync(projectDir, { recursive: true });
 
-  const templateDir = path.resolve(__dirname, 'templates', template);
+  const templateDir = path.resolve(__dirname, '../', 'templates', template);
 
   fs.cpSync(templateDir, projectDir, { recursive: true });
-
 
   fs.renameSync(
     path.join(projectDir, 'gitignore'),
@@ -64,7 +81,7 @@ const setupProject = async (targetDir, packageName) => {
 
   process.chdir(projectDir);
 
-  // Step 2: Replace `ts-package` with the new package name
+  // Step 2: Replace `open-package` with the new package name
   replaceInTemplate(template)
 
   // Step 3: Update the `package.json` file with the new package information
@@ -87,10 +104,10 @@ const setupProject = async (targetDir, packageName) => {
 };
 
 if (!packageName) {
-  console.error('Usage: setup-project <target-directory> <package-name> <target-repository-url>');
+  console.error('Usage: setup-project <package-name> <target-repository-url>');
   process.exit(1);
 }
 
-setupProject(targetDir, packageName)
+setupProject(packageName)
   .then(() => console.log('Project setup complete'))
   .catch((err) => console.error('Error setting up project:', err));

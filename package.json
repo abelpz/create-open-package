@@ -1,10 +1,12 @@
 {
-  "name": "ts-package",
-  "version": "1.0.0",
+  "name": "create-open-package",
+  "version": "0.0.3",
+  "author": "abelpz",
   "bin": {
-    "ts-package": "./bin/setup-project.js"
+    "create-open-package": "bin/setup-project.js"
   },
   "dependencies": {
-    "cross-spawn": "^7.0.3"
+    "cross-spawn": "^7.0.3",
+    "yargs": "^17.1.1-candidate.0"
   }
 }

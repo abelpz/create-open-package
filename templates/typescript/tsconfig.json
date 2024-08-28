@@ -14,8 +14,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "paths": {
-      "ts-package": ["./src/index.ts"],
-      "ts-package/*": ["./src/*"]
+      "{package-name}": ["./src/index.ts"],
+      "{package-name}/*": ["./src/*"]
     }
   },
   "include": ["src/**/*"]

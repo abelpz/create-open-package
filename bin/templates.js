@@ -2,7 +2,7 @@ const TEMPLATES = {
   "typescript": {
     replacements: [
       {
-        files: ["README.md", "package.json", "jest.config.ts", "tsconfig.json", "workflows/ci.yml"],
+        files: ["README.md", "package.json", "jest.config.js", "tsconfig.json", "workflows/ci.yml"],
         key: "{package-name}"
       },
       {

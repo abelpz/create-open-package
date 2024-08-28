@@ -1,5 +1,5 @@
 {
-  "name": "ts-package",
+  "name": "{package-name}",
   "version": "1.0.0-beta.1",
   "description": "",
   "author": "{author}",
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/{author}/ts-package.git"
+    "url": "https://github.com/{author}/{package-name}.git"
   },
   "bugs": {
-    "url": "https://github.com/{author}/ts-package/issues"
+    "url": "https://github.com/{author}/{package-name}/issues"
   },
-  "homepage": "https://github.com/{author}/ts-package",
+  "homepage": "https://github.com/{author}/{package-name}",
   "engines": {
     "node": ">=12.0.0"
   },

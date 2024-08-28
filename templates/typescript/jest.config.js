@@ -6,14 +6,14 @@ console.info(
 );
 
 module.exports = {
-  displayName: 'ts-package',
+  displayName: '{package-name}',
   preset: 'ts-jest',
   testEnvironment: 'node',
   testMatch: ['<rootDir>/src/**/*.test.ts'],
 
   moduleNameMapper: {
-    '^ts-package$': `<rootDir>/${source[0]}/index.${source[1]}`,
-    '^ts-package/(.*)$': `<rootDir>/${source[0]}/$1`,
+    '^{package-name}$': `<rootDir>/${source[0]}/index.${source[1]}`,
+    '^{package-name}/(.*)$': `<rootDir>/${source[0]}/$1`,
   },
   collectCoverage: true,
   coverageReporters: ['text', 'cobertura'],
